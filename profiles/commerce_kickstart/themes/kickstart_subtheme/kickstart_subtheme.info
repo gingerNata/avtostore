@@ -1,17 +1,15 @@
-name = Commerce Kickstart Theme
+name = Commerce Kickstart custom Theme
 description = ''
 package = Commerce Kickstart
 core = 7.x
 screenshot = screenshot.png
-base theme = omega_kickstart
+base theme = 'omega'
 
-; REQUIRED CORE REGIONS
+scripts[] = js/kickstart_subtheme.js
 
-regions[page_top] = Page Top
-regions[page_bottom] = Page Bottom
-regions[content] = Content
-
-; ADDITIONAL REGIONS
+regions[page_top] = 'Page Top'
+regions[page_bottom] = 'Page Bottom'
+regions[content] = 'Content'
 
 regions[user_first] = User Bar First
 regions[user_second] = User Bar Second
@@ -41,35 +39,19 @@ regions[footer_third] = Footer Third
 regions[footer2_first] = Footer2 First
 regions[footer2_second] = Footer2 Second
 
-; ZONES
+zones[header] = 'Header'
+zones[content] = 'Content'
+zones[footer] = 'Footer'
+zones[footer2] = 'Footer 2'
+zones[user] = 'User'
+zones[branding] = 'Branding'
+zones[menu] = 'Menu'
+zones[preface] = 'Preface'
+zones[postscript] = 'Postscript'
 
-zones[user] = User
-zones[branding] = Branding
-zones[menu] = Menu
-zones[header] = Header
-zones[preface] = Preface
-zones[content] = Content
-zones[postscript] = Postscript
-zones[footer] = Footer first
-zones[footer2] = Footer second
-
-
-; OPTIONAL STYLESHEETS
-
-css[commerce_kickstart_style.css][name] = Commerce Kickstart theme global style.
-css[commerce_kickstart_style.css][description] = This file holds all the globally active custom CSS of Commerce Kickstart theme.
-css[commerce_kickstart_style.css][options][weight] = 11
-settings[alpha_css][commerce_kickstart_style.css] = 'commerce_kickstart_style.css'
-
-; OPTIONAL LIBRARIES
-
-libraries[commerce_kickstart_theme_custom][name] = Commerce kickstart theme JS
-libraries[commerce_kickstart_theme_custom][description] = This file holds all the custom JS.
-libraries[commerce_kickstart_theme_custom][js][0][file] = commerce_kickstart_theme_custom.js
-libraries[commerce_kickstart_theme_custom][js][0][options][weight] = 15
-settings[alpha_libraries][commerce_kickstart_theme_custom] = 'commerce_kickstart_theme_custom'
-
-; THEME SETTINGS (DEFAULTS)
+css[global.css][name] = 'Your custom global styles'
+css[global.css][description] = 'This file holds all the globally active custom CSS of your theme.'
+css[global.css][options][weight] = '10'
 
 settings[alpha_grid] = 'alpha_default'
 settings[alpha_primary_alpha_default] = 'normal'
@@ -235,7 +217,7 @@ settings[alpha_region_user_first_equal_height_element] = ''
 settings[alpha_region_user_first_force] = ''
 settings[alpha_region_user_first_zone] = 'user'
 settings[alpha_region_user_first_prefix] = ''
-settings[alpha_region_user_first_columns] = '16'
+settings[alpha_region_user_first_columns] = '17'
 settings[alpha_region_user_first_suffix] = '0'
 settings[alpha_region_user_first_weight] = '1'
 settings[alpha_region_user_first_css] = ''
@@ -244,7 +226,7 @@ settings[alpha_region_user_second_equal_height_element] = ''
 settings[alpha_region_user_second_force] = ''
 settings[alpha_region_user_second_zone] = 'user'
 settings[alpha_region_user_second_prefix] = ''
-settings[alpha_region_user_second_columns] = '8'
+settings[alpha_region_user_second_columns] = '7'
 settings[alpha_region_user_second_suffix] = ''
 settings[alpha_region_user_second_weight] = '2'
 settings[alpha_region_user_second_css] = ''
@@ -419,10 +401,4 @@ settings[alpha_region_footer2_second_columns] = '9'
 settings[alpha_region_footer2_second_suffix] = ''
 settings[alpha_region_footer2_second_weight] = '2'
 settings[alpha_region_footer2_second_css] = ''
-
-; Information added by Drupal.org packaging script on 2017-02-24
-version = "7.x-2.45"
-core = "7.x"
-project = "commerce_kickstart"
-datestamp = "1487976276"
 

@@ -10,10 +10,11 @@
  * Implements hook_views_pre_build().
  */
 function avto_views_pre_build(&$view) {
-    if (
-    $view->name == 'taxonomy_term_custom' && $view->current_display == 'block_1') {
+    if ($view->name == 'taxonomy_term_custom' && $view->current_display == 'block_1') {
       $arg = arg(2);
+      //make right links (products/%/%) for brand/* pages
       $view->field['name']->options['alter']['path'] = "products/$arg/[tid]";
+      $view->field['field_icon']->options['alter']['path'] = "products/$arg/[tid]";
     }
 }
 
@@ -23,7 +24,7 @@ function avto_views_pre_build(&$view) {
 function avto_preprocess_page(&$vars) {
   $product_display_types = commerce_product_reference_node_types();
   if (isset($vars['node']->type) && isset($product_display_types[$vars['node']->type])) {
-    $vars['title'] = $vars['node']->title;
+    $vars['title'] = $vars['node']->title; //set title on product page
   }
 }
 
