@@ -102,8 +102,8 @@ function bootstrap_business_preprocess_page(&$vars) {
 		$vars['sidebar_grid_class'] = 'col-md-3';
 		$vars['main_grid_class'] = 'col-md-6';
 	} elseif ($vars['page']['sidebar_first'] || $vars['page']['sidebar_second']) {
-		$vars['sidebar_grid_class'] = 'col-md-2';
-		$vars['main_grid_class'] = 'col-md-10';
+		$vars['sidebar_grid_class'] = 'col-md-3';
+		$vars['main_grid_class'] = 'col-md-9';
 	} else {
 		$vars['main_grid_class'] = 'col-md-12';			
 	}
@@ -114,6 +114,12 @@ function bootstrap_business_preprocess_page(&$vars) {
 	} elseif ($vars['page']['header_top_right'] || $vars['page']['header_top_left']) {
 		$vars['header_top_left_grid_class'] = 'col-md-12';
 		$vars['header_top_right_grid_class'] = 'col-md-12';		
+	}
+
+	if (!empty($vars['page']['content']['block_5'])){
+		$block = $vars['page']['content']['block_5'];
+		unset($vars['page']['content']['block_5']);
+		$vars['page']['content']['block_5'] = $block;
 	}
 
 	/**
@@ -198,6 +204,14 @@ function bootstrap_business_preprocess_field(&$variables) {
 		}
 		else {
 			$variables['classes_array'][] = 'gray';
+		}
+	}
+	if($variables['element']['#field_name'] == 'field_state') {
+		if($variables['element']['#items'][0]['value'] == 1) {
+			$variables['classes_array'][] = 'green';
+		}
+		else {
+			$variables['classes_array'][] = 'orrange';
 		}
 	}
 }

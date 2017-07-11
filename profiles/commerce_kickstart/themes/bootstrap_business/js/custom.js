@@ -3,7 +3,7 @@
  */
 function openCity(cityName) {
     var i;
-    var x = document.getElementsByClassName("field-name-body");
+    var x = document.getElementsByClassName("field-name-field-description");
     for (i = 0; i < x.length; i++) {
         x[i].style.display = "none";
     }
@@ -20,7 +20,7 @@ function openCity(cityName) {
     for (i = 0; i < x.length; i++) {
         x[i].style.display = "block";
      }
-    var element1 = document.getElementById("field-name-body");
+    var element1 = document.getElementById("field-name-field-description");
     element1.classList.remove("active");
 
     var element = document.getElementById("field-name-comments-from-block");
