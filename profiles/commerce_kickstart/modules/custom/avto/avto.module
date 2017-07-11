@@ -28,3 +28,177 @@ function avto_preprocess_page(&$vars) {
   }
 }
 
+/**
+ * Implements hook_menu().
+ */
+function avto_menu() {
+  $items = array();
+
+  $items['popup/%ctools_js'] = array(
+    'page callback' => 'popup_callback',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function avto_block_info() {
+  $blocks = array();
+  $blocks['popup_block'] = array(
+    'info' => t('My popup block'),
+    'cache' => DRUPAL_NO_CACHE,
+  );
+
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function avto_block_view($block_name = '') {
+  if ($block_name == 'popup_block') {
+    ctools_include('modal');
+    ctools_modal_add_js();
+    $content = _mymodule_make_link(t('Bye fast'));
+    $block = array(
+      'subject' => t('Hello world'),
+      'content' => t($content),
+    );
+
+    return $block;
+  }
+}
+
+/**
+ * Helper function to make a link.
+ */
+function _mymodule_make_link($link_text = '') {
+  // Set a default value if no text in supplied.
+  if (empty($link_text)) {
+    $link_text = 'Magical Modal';
+  }
+  $nid = arg(1);
+  return '<div id="magical-modal-link">' . l($link_text, 'popup/nojs/' . $nid, array('attributes' => array('class' => 'ctools-use-modal'))) . '</div>';
+}
+
+
+/**
+ * Ajax menu callback.
+ */
+function popup_callback($ajax = false, $nid) {
+  global $user;
+  if (!$ajax) {
+    return "Javascript required";
+  }
+
+  ctools_include('node.pages', 'node', '');
+  ctools_include('modal');
+  ctools_include('ajax');
+  ctools_add_js('auto-submit');
+  $type = 'request';
+
+  // Create a blank node object.
+  $node = (object) array(
+    'uid' => $user->uid,
+    'name' => (isset($user->name) ? $user->name : ''),
+    'type' => $type,
+    'language' => LANGUAGE_NONE,
+    'field_product_ref' => array('und' => array(0 => array('target_id' => $nid))));
+
+  $form_state = array(
+    'title' => t('Send order'),
+    'ajax' => TRUE,
+  );
+
+  $form_state['build_info']['args'] = array($node);
+  $output = ctools_modal_form_wrapper($type .'_node_form', $form_state);
+
+
+  if (!empty($form_state['executed'])) {
+    $title = t("Sent");
+    $output = t("Your application has been sent and will be processed within 
+    24 hours (taking into account the schedule of work). We will call you.");
+    $output = "<div class=\"popup-message\">$output<div/>";
+    $commands = array();
+    $commands[] = ctools_modal_command_display($title, $output);
+    $commands[] = ctools_ajax_command_redirect('/node/' . $nid, 3);
+    print ajax_render($commands);
+    exit;
+  }
+
+  print ajax_render($output);
+  exit;
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function avto_form_alter(&$form, &$form_state, $form_id) {
+  switch ($form_id) {
+    case 'contact_site_form':
+
+      $form['left'] = array('#type' => 'fieldset');
+      $form['right'] = array('#type' => 'fieldset');
+
+      $form['mail']['#required'] = false;
+      $form['subject']['#title'] = t('Your phone');
+      $form['copy']['#access'] = false;
+
+      $form['left']['mail'] = $form['mail'];
+      $form['left']['subject'] = $form['subject'];
+      $form['left']['name'] = $form['name'];
+      $form['right']['message'] = $form['message'];
+
+      if(!empty($form['captcha'])){
+        $form['right']['captcha'] = $form['captcha'];
+        unset($form['captcha']);
+      }
+
+      unset($form['mail']);
+      unset($form['subject']);
+      unset($form['name']);
+      unset($form['message']);
+      break;
+    case 'request_node_form':
+      $form['left'] = array('#type' => 'fieldset');
+      $form['right'] = array('#type' => 'fieldset');
+
+      $form['title_field']['und'][0]['value']['#attributes']['placeholder'] = $form['title_field']['und']['#title'];
+      $form['title_field']['und'][0]['value']['#title_display'] = 'invisible';
+      $form['left']['title_field'] = $form['title_field'];
+      unset($form['title_field']);
+
+      $form['field_massage']['und'][0]['value']['#attributes']['placeholder'] = $form['field_massage']['und']['#title'];
+      $form['field_massage']['und'][0]['value']['#title_display'] = 'invisible';
+      $form['right']['field_massage'] = $form['field_massage'];
+      unset($form['field_massage']);
+
+      $form['field_phone_apply']['und'][0]['value']['#attributes']['placeholder'] = $form['field_phone_apply']['und']['#title'];
+      $form['field_phone_apply']['und'][0]['value']['#title_display'] = 'invisible';
+      $form['left']['field_phone_apply'] = $form['field_phone_apply'];
+      unset($form['field_phone_apply']);
+
+      $form['field_product_ref']['#access'] = FALSE;
+      break;
+    case 'user_login':
+      $form['name']['#description'] = '';
+      $form['pass']['#description'] = '';
+      break;
+    case 'user_register_form':
+      $form['account']['name']['#description'] = '';
+      $form['account']['mail']['#description'] = '';
+      break;
+  }
+}
+
+/**
+ * Implements hook_commerce_price_formatted_components_alter().
+ */
+function avto_commerce_price_formatted_components_alter(&$components, $price, $entity) {
+  $components['commerce_price_formatted_amount']['title'] = t('Order Total');
+}
