@@ -109,8 +109,8 @@ function bootstrap_business_preprocess_page(&$vars) {
 	}
 
 	if($vars['page']['header_top_left'] && $vars['page']['header_top_right']) { 
-		$vars['header_top_left_grid_class'] = 'col-md-6';
-		$vars['header_top_right_grid_class'] = 'col-md-3';
+		$vars['header_top_left_grid_class'] = 'col-md-4';
+		$vars['header_top_right_grid_class'] = 'col-md-2';
 	} elseif ($vars['page']['header_top_right'] || $vars['page']['header_top_left']) {
 		$vars['header_top_left_grid_class'] = 'col-md-12';
 		$vars['header_top_right_grid_class'] = 'col-md-12';		
@@ -208,7 +208,7 @@ function bootstrap_business_preprocess_field(&$variables) {
 	}
 	if($variables['element']['#field_name'] == 'field_state') {
 		if($variables['element']['#items'][0]['value'] == 1) {
-			$variables['classes_array'][] = 'green';
+			$variables['classes_array'][] = 'green-bac';
 		}
 		else {
 			$variables['classes_array'][] = 'orrange';

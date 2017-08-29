@@ -419,7 +419,7 @@
 
     // Create our divs
     $('body').append('<div id="modalBackdrop" class="backdrop-' + modalClass + '" style="z-index: 1000; display: none;"></div><div id="modalContent" class="modal-' + modalClass + '" style="z-index: 1001; position: absolute;">' + $(content).html() + '</div>');
-
+    $('#modalBackdrop').click(function() { close(); });
     // Get a list of the tabbable elements in the modal content.
     var getTabbableElements = function () {
       var tabbableElements = $('#modalContent :tabbable'),

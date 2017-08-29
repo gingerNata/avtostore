@@ -19,7 +19,7 @@ function openCity(cityName) {
     x = document.getElementsByClassName(cityName);
     for (i = 0; i < x.length; i++) {
         x[i].style.display = "block";
-     }
+    }
     var element1 = document.getElementById("field-name-field-description");
     element1.classList.remove("active");
 
@@ -32,3 +32,29 @@ function openCity(cityName) {
     var element = document.getElementById(cityName);
     element.classList.add("active");
 }
+(function ($) {
+    Drupal.behaviors.exampleModule = {
+        attach: function (context, settings) {
+            $(".cars-row").each(function (index, data) {
+                $(data).click(function () {
+                    $('.little-car').css({
+                        display: 'none'
+                    });
+                    $('.cars-row').removeClass('open').css({
+                        display: 'none'
+                    });
+                    $(data).css({
+                        display: 'block'
+                    });
+
+                    var elements = data.getElementsByClassName('little-car');
+                    $(elements).css({
+                        display: 'block'
+                    });
+                    $(data).addClass('open');
+                });
+
+            });
+        }
+    };
+}(jQuery));

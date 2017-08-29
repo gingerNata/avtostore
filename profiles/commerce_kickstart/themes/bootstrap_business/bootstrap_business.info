@@ -8,6 +8,7 @@ scripts[] = js/custom.js
 stylesheets[all][] = css/style.css
 stylesheets[all][] = color/colors.css
 stylesheets[all][] = css/local.css
+stylesheets[all][] = css/mobile.css
 stylesheets[all][] = css/my_styles.css
 
 regions[pre_header_first] = Pre Header First
@@ -24,6 +25,7 @@ regions[content] = Content
 regions[sidebar_first] = Sidebar First
 regions[sidebar_second] = Sidebar Second
 regions[bottom_content] = Bottom Content
+regions[pre_footer] = Pre Footer
 regions[footer_first] = Footer First
 regions[footer_second] = Footer Second
 regions[footer_third] = Footer Third

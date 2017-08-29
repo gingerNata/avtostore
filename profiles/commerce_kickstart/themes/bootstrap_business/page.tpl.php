@@ -53,7 +53,7 @@
         <div id="header-top-inside" class="clearfix">
             <div class="row">
 
-                <div class="logo-wrapper col-md-3">
+                <div class="logo-wrapper col-md-6">
                     <?php if ($logo):?>
                         <div id="logo">
                             <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home"> <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" /> </a>
@@ -303,6 +303,26 @@
         </div>
     </div>
     <!-- EOF:#main-content -->
+
+    <?php if ($page['pre_footer']):?>
+    <!-- #pre_footer -->
+    <div id="pre-footer" class="clearfix">
+        <div class="container">
+
+            <!-- #pre_footer-inside -->
+            <div id="pre-footer-inside" class="clearfix">
+                <div class="row">
+                    <div class="col-md-12">
+                    <?php print render($page['pre_footer']); ?>
+                    </div>
+                </div>
+            </div>
+            <!-- EOF:#pre_footer-inside -->
+
+        </div>
+    </div>
+    <!-- EOF: #pre_footer -->
+    <?php endif; ?>
 
     <?php if ($page['bottom_content']):?>
     <!-- #bottom-content -->
